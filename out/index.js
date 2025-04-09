@@ -16,6 +16,7 @@ const koa_1 = __importDefault(require("koa"));
 const koa_router_1 = __importDefault(require("koa-router"));
 const koa_logger_1 = __importDefault(require("koa-logger"));
 const koa_json_1 = __importDefault(require("koa-json"));
+const koa_static_1 = __importDefault(require("koa-static"));
 const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 const koa_passport_1 = __importDefault(require("koa-passport"));
 const articles_1 = require("./routes/articles");
@@ -29,6 +30,7 @@ const welcomeAPI = (ctx, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const router = new koa_router_1.default();
 //router.get('/api/v1', welcomeAPI);
+app.use((0, koa_static_1.default)('./docs'));
 app.use((0, koa_json_1.default)());
 app.use((0, koa_logger_1.default)());
 app.use((0, koa_bodyparser_1.default)());
