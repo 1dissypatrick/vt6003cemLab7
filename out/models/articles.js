@@ -42,7 +42,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteById = exports.update = exports.add = exports.getAll = exports.getById = void 0;
+exports.add = exports.getAll = exports.getById = void 0;
 const db = __importStar(require("../helpers/database"));
 const getById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     let query = "select * from articles where id = ?;";
@@ -76,31 +76,3 @@ const add = (article) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.add = add;
-const update = (article, id) => __awaiter(void 0, void 0, void 0, function* () {
-    //console.log("article " , article)
-    // console.log("id ",id)
-    let keys = Object.keys(article);
-    let values = Object.values(article);
-    let updateString = "";
-    for (let i = 0; i < values.length; i++) {
-        updateString += keys[i] + "=" + "'" + values[i] + "'" + ",";
-    }
-    updateString = updateString.slice(0, -1);
-    // console.log("updateString ", updateString)
-    let query = `UPDATE articles SET ${updateString} WHERE ID=${id} RETURNING *;`;
-    try {
-        yield db.run_query(query, values);
-        return { "status": 201 };
-    }
-    catch (error) {
-        return error;
-    }
-});
-exports.update = update;
-const deleteById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    let query = "Delete FROM articles WHERE ID = ?";
-    let values = [id];
-    let data = yield db.run_query(query, values);
-    return data;
-});
-exports.deleteById = deleteById;

@@ -3,12 +3,9 @@ import { BasicStrategy } from "passport-http";
 import { RouterContext } from "koa-router";
 
 import * as users from '../models/users';
-import bcrypt from 'bcrypt';
-
 const verifyPassword = (user: any, password: string) => {
-   return bcrypt.compareSync(password, user.password);
+   return user.password === password;
 }
-
 
 passport.use(new BasicStrategy(async (username, password, done)=> {
   let result: any[] = [];
@@ -31,11 +28,11 @@ passport.use(new BasicStrategy(async (username, password, done)=> {
     done(null,false);
   }
   
-  if(username === "dummy" && password == "password") {
-    done(null, {username: "dummy"})
-  } else {
-    done(null, false);
-  }
+  // if(username === "dummy" && password == "password") {
+  //   done(null, {username: "dummy"})
+  // } else {
+  //   done(null, false);
+  // }
 }));
 
 export const basicAuth = async (ctx: RouterContext, next: any) => {

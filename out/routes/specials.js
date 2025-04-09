@@ -12,7 +12,7 @@ router.get("/private", auth_1.basicAuth, privateAPI);
 // Add a protected route that requires authentication
 function privateAPI(ctx, next) {
     const user = ctx.state.user;
-    console.log('user=> ' + JSON.stringify(user));
-    console.log('status=> ' + ctx.status);
+    //  console.log('user=> '+JSON.stringify(user))
+    //  console.log('status=> '+ctx.status)
     ctx.body = { message: `Hello ${user.user.username} you registered on ${user.user.dateregistered}` };
 }

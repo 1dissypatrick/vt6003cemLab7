@@ -17,17 +17,16 @@ const welcomeAPI = async (ctx: RouterContext, next: any) => {
 };
 const router: Router = new Router();
 
-router.get('/api/v1', welcomeAPI);
+//router.get('/api/v1', welcomeAPI);
 
 app.use(json());
 app.use(logger());
 app.use(bodyParser());
 app.use(router.routes());
-app.use(articles.routes());
+//app.use(articles.routes());
 app.use(passport.initialize());
 app.use(special.middleware());
 app.use(articles.middleware());
-app.use(special.routes());
 
 app.use(async (ctx: RouterContext, next: any) => {
   try {

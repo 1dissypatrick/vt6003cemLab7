@@ -28,16 +28,15 @@ const welcomeAPI = (ctx, next) => __awaiter(void 0, void 0, void 0, function* ()
     yield next();
 });
 const router = new koa_router_1.default();
-router.get('/api/v1', welcomeAPI);
+//router.get('/api/v1', welcomeAPI);
 app.use((0, koa_json_1.default)());
 app.use((0, koa_logger_1.default)());
 app.use((0, koa_bodyparser_1.default)());
 app.use(router.routes());
-app.use(articles_1.router.routes());
+//app.use(articles.routes());
 app.use(koa_passport_1.default.initialize());
 app.use(specials_1.router.middleware());
 app.use(articles_1.router.middleware());
-app.use(specials_1.router.routes());
 app.use((ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield next();

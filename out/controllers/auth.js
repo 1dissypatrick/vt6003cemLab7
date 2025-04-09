@@ -49,9 +49,8 @@ exports.basicAuth = void 0;
 const koa_passport_1 = __importDefault(require("koa-passport"));
 const passport_http_1 = require("passport-http");
 const users = __importStar(require("../models/users"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const verifyPassword = (user, password) => {
-    return bcrypt_1.default.compareSync(password, user.password);
+    return user.password === password;
 };
 koa_passport_1.default.use(new passport_http_1.BasicStrategy((username, password, done) => __awaiter(void 0, void 0, void 0, function* () {
     let result = [];
@@ -76,22 +75,16 @@ koa_passport_1.default.use(new passport_http_1.BasicStrategy((username, password
         console.log(`no such user ${username}`);
         done(null, false);
     }
-    if (username === "dummy" && password == "password") {
-        done(null, { username: "dummy" });
-    }
-    else {
-        done(null, false);
-    }
+    // if(username === "dummy" && password == "password") {
+    //   done(null, {username: "dummy"})
+    // } else {
+    //   done(null, false);
+    // }
 })));
 const basicAuth = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    yield koa_passport_1.default.authenticate("basic", { session: false }, (err, user) => __awaiter(void 0, void 0, void 0, function* () {
-        if (!user) {
-            ctx.status = 401;
-            ctx.body = { message: 'You are not authorized' };
-        }
-        else {
-            yield next(); // Proceed to next middleware if authenticated
-        }
-    }))(ctx, next);
+    yield koa_passport_1.default.authenticate("basic", { session: false })(ctx, next);
+    if (ctx.status == 401) {
+        ctx.body = { message: 'you are not authorized' };
+    }
 });
 exports.basicAuth = basicAuth;

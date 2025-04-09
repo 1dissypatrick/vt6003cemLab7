@@ -87,11 +87,11 @@ const getById = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
     // }
 });
 const createArticle = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { title, fullText } = ctx.request.body;
-    let newArticle = { title: title, fullText: fullText };
-    articles.push(newArticle);
-    ctx.status = 201;
-    ctx.body = newArticle;
+    // let { title, fullText }: any = ctx.request.body;
+    // let newArticle = { title: title, fullText: fullText};
+    // articles.push(newArticle);
+    // ctx.status = 201;
+    // ctx.body = newArticle;
     const body = ctx.request.body;
     let result = yield model.add(body);
     if (result.status == 201) {
@@ -105,25 +105,13 @@ const createArticle = (ctx, next) => __awaiter(void 0, void 0, void 0, function*
     yield next();
 });
 const updateArticle = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = +ctx.params.id;
-    // let {title, fullText} = ctx.request.body;
-    let c = ctx.request.body;
-    let result = yield model.update(c, id);
-    if (result) {
-        ctx.status = 201;
-        ctx.body = `Article with id ${id} updated`;
-    }
     yield next();
 });
 const deleteArticle = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = +ctx.params.id;
-    let article = yield model.deleteById(id);
-    ctx.status = 201;
-    ctx.body = `Article with id ${id} deleted`;
     yield next();
 });
 router.get("/", getAll);
 router.post("/", auth_1.basicAuth, (0, koa_bodyparser_1.default)(), validation_1.validateArticle, createArticle);
 router.get("/:id([0-9]{1,})", getById);
-router.put("/:id([0-9]{1,})", (0, koa_bodyparser_1.default)(), updateArticle);
+router.put("/:id([0-9]{1,})", updateArticle);
 router.del("/:id([0-9]{1,})", deleteArticle);

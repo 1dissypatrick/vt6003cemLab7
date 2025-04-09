@@ -28,29 +28,3 @@ export const add = async (article: any) => {
     return err;
   }
 }
-
-export const  update= async(article:any,id:any)  =>{  
-    
-  //console.log("article " , article)
- // console.log("id ",id)
-  let keys = Object.keys(article)
-  let values = Object.values(article)  
-  let updateString=""
-  for(let i: number = 0; i<values.length;i++){updateString+=keys[i]+"="+"'"+values[i]+"'"+"," }
- updateString= updateString.slice(0, -1)
- // console.log("updateString ", updateString)
-  let query = `UPDATE articles SET ${updateString} WHERE ID=${id} RETURNING *;`
-  try{
-   await db.run_query(query, values)  
-    return {"status": 201}
-  } catch(error) {
-    return error
-  }
-}
-
-export const deleteById = async (id:any) => {
-  let query = "Delete FROM articles WHERE ID = ?"
-  let values = [id]
-  let data = await db.run_query(query, values)
-  return data
-}

@@ -38,11 +38,11 @@ const getById = async (ctx: RouterContext, next: any) => {
   // }
 };
 const createArticle = async (ctx: RouterContext, next: any) => {
-  let { title, fullText }: any = ctx.request.body;
-  let newArticle = { title: title, fullText: fullText};
-  articles.push(newArticle);
-  ctx.status = 201;
-  ctx.body = newArticle;
+  // let { title, fullText }: any = ctx.request.body;
+  // let newArticle = { title: title, fullText: fullText};
+  // articles.push(newArticle);
+  // ctx.status = 201;
+  // ctx.body = newArticle;
   const body = ctx.request.body;
   let result = await model.add(body);
   if (result.status == 201) {
@@ -55,29 +55,15 @@ const createArticle = async (ctx: RouterContext, next: any) => {
   await next();
 };
 const updateArticle = async (ctx: RouterContext, next: any) => {
-  let id = +ctx.params.id;
-  // let {title, fullText} = ctx.request.body;
-  let c: any = ctx.request.body;
-  
-  let result = await model.update(c,id)
-  if (result) {
-    ctx.status = 201
-    ctx.body = `Article with id ${id} updated` 
-  } 
   await next();
 };
 const deleteArticle = async (ctx: RouterContext, next: any) => {
-  let id = +ctx.params.id;
-
-let article = await model.deleteById(id)
-  ctx.status=201
-    ctx.body = `Article with id ${id} deleted`
   await next();
 };
 
 router.get("/", getAll);
 router.post("/", basicAuth, bodyParser(), validateArticle, createArticle);
 router.get("/:id([0-9]{1,})", getById);
-router.put("/:id([0-9]{1,})", bodyParser(), updateArticle);
+router.put("/:id([0-9]{1,})", updateArticle);
 router.del("/:id([0-9]{1,})", deleteArticle);
 export { router };
